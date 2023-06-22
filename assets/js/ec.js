@@ -23,7 +23,7 @@ function DownloadCanvasAsImage(){
     });
 }
 
-imageObj.src = "assets/images/pe.png"; 
+imageObj.src = "assets/images/ec.png"; 
 
 var downloadCardButton = document.getElementById('downloadCard');
 downloadCardButton.addEventListener('click', function(e){
@@ -42,7 +42,7 @@ downloadCardButton.addEventListener('click', function(e){
 
     // center and make text
     textWidth = (imageWidth - imageWidth / 2)
-    textHeight = (imageHeight - 1100)
+    textHeight = (imageHeight - 300)
     
     context.fillText(text, textWidth, textHeight);
 
@@ -50,7 +50,7 @@ downloadCardButton.addEventListener('click', function(e){
     document.getElementById('name').value = "";
 
     // download the image
-    DownloadCanvasAsImage();
+   // DownloadCanvasAsImage();
 });
 
 
