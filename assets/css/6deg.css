@@ -1,0 +1,33 @@
+.image {
+    width: 500px;
+    height: 700px;
+}
+
+body {
+    background: url("../images/background-color.jpg");
+}
+
+@font-face {
+    font-family: "DINN";
+    src: url(../fonts/din-next-lt-w23-medium.ttf);
+}
+
+#myCanvas{
+    font-family: "DINN";
+    max-height: 800px;
+}
+
+.container {
+    display: block;
+    margin: auto;
+    height: auto;
+  }
+
+canvas {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+body{
+    font-family: "DINN";
+}
