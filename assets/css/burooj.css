@@ -1,0 +1,33 @@
+.image {
+    width: 500px;
+    height: 700px;
+}
+
+body {
+    background: url("../images/background-color.jpg");
+}
+
+@font-face {
+    font-family: "AlQabas";
+    src: url(../fonts/Alqabas.ttf);
+}
+
+#myCanvas{
+    font-family: "AlQabas";
+    max-height: 800px;
+}
+
+.container {
+    display: block;
+    margin: auto;
+    height: auto;
+  }
+
+canvas {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+body{
+    font-family: "AlQabas";
+}
