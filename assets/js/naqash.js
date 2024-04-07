@@ -35,7 +35,7 @@ downloadCardButton.addEventListener('click', function(e){
 
     // custom font
     context.textAlign = 'center';
-    context.font = "50pt RB-Light";
+    context.font = "80pt RB-Light";
 
     // text color
     context.fillStyle = '#FFFFFF';
