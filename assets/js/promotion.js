@@ -42,7 +42,7 @@ downloadCardButton.addEventListener('click', function(e){
 
     // center and make text
     textWidth = (imageWidth - imageWidth / 2)
-    textHeight = (imageHeight - 2500)
+    textHeight = (imageHeight - 2000)
     
     context.fillText(text, textWidth, textHeight);
 
