@@ -1,10 +1,11 @@
 .image {
-    width: 500px;
-    height: 700px;
+    width: 1080px;
+    height: 1920px;
 }
 
 body {
-    background: url("../images/background-color.jpg");
+    background: url("../images/background-color.png");
+
 }
 
 @font-face {
@@ -30,4 +31,22 @@ canvas {
 
 body{
     font-family: "GESSTwoLight";
+}
+
+footer {
+
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+footer a {
+  
+    font-weight: bold;
+    color: white !important;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
