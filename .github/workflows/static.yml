@@ -27,10 +27,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload Artifact
-        # uses: actions/upload-pages-artifact@v1  # ✅ Reverted back to v1
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "."
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
