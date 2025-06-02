@@ -1,12 +1,12 @@
 
 
 @font-face {
-    font-family: "AlQabas";
-    src: url(../fonts/Alqabas.ttf);
+    font-family: "GESSTwoLight";
+    src: url(../fonts/GESSTwoLight.otf);
 }
 
   
-  body {
+body {
     font-family: 'GESSTwoLight', sans-serif;
     background-color: #121212;
     color: #ffffff;

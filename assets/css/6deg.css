@@ -1,11 +1,11 @@
 
 @font-face {
-    font-family: "DINN";
-    src: url(../fonts/din-next-lt-w23-medium.ttf);
+    font-family: "GESSTwoLight";
+    src: url(../fonts/GESSTwoLight.otf);
 }
 
   
-  body {
+body {
     font-family: 'GESSTwoLight', sans-serif;
     background-color: #121212;
     color: #ffffff;

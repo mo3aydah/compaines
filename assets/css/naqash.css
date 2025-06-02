@@ -1,12 +1,11 @@
 
-
 @font-face {
-    font-family: "RB-Light";
-    src: url(../fonts/RB-Light.ttf);
+    font-family: "GESSTwoLight";
+    src: url(../fonts/GESSTwoLight.otf);
 }
 
   
-  body {
+body {
     font-family: 'GESSTwoLight', sans-serif;
     background-color: #121212;
     color: #ffffff;

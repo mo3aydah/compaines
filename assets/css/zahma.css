@@ -4,14 +4,8 @@
     src: url(../fonts/GESSTwoLight.otf);
 }
 
-
-@font-face {
-    font-family: "GESSTwoLight";
-    src: url(../fonts/GESSTwoLight.otf);
-}
-
   
-  body {
+body {
     font-family: 'GESSTwoLight', sans-serif;
     background-color: #121212;
     color: #ffffff;

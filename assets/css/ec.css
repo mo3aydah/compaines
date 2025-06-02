@@ -5,12 +5,11 @@
 }
 
   
-  body {
+body {
     font-family: 'GESSTwoLight', sans-serif;
     background-color: #121212;
     color: #ffffff;
   }
-  
   .imageCover {
     margin-bottom: 0;
     padding-bottom: 0;
