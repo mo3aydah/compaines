@@ -1,51 +1,79 @@
-.image {
-    width: 1080px;
-    height: 1920px;
-}
 
-body {
-    background: url("../images/background-color.png");
-
-}
 @font-face {
     font-family: "GESSTwoLight";
     src: url(../fonts/GESSTwoLight.otf);
 }
 
-#myCanvas{
-    font-family: "GESSTwoLight";
-    max-height: 800px;
-}
-
-.container {
-    display: block;
-    margin: auto;
-    height: auto;
-  }
-
-canvas {
-    max-width: 100%;
-    object-fit: contain;
-}
-
-body{
-    font-family: "GESSTwoLight";
-}
-
-footer {
-
-    color: white;
-    font-size: 14px;
-    text-align: center;
-    padding: 10px 0;
-}
-
-footer a {
   
-    font-weight: bold;
-    color: white !important;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
+  body {
+    font-family: 'GESSTwoLight', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .imageCover {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    line-height: 0;
+  }
+  
+  
+  canvas {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+  
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  
+    object-fit: contain;
+  }
+  
+  .form-control,
+  .btn {
+    border-radius: 12px;
+  }
+  
+  .form-control {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #333;
+  }
+  
+  .form-control::placeholder {
+    color: #bbb;
+    font-size: 0.95rem;
+  }
+  
+  .btn-light {
+    background-color: #ffffff;
+    color: #000;
+  }
+  
+  .info-text {
+    color: #aaa;
+    font-size: 1rem;
+    margin-top: 0;
+  }
+  
+  footer a {
+    color: #6c8eff;
+  }
+  .imageCover canvas {
+    width: 100%;
+    max-width: 375px; /* or adjust to a size that looks good on mobile */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  @media (max-width: 576px) {
+    .imageCover canvas {
+      max-width: 90%;
+      height: 400px; /* shrink visual height on mobile */
+      object-fit: contain;
+    }
+  }
+  
+  
