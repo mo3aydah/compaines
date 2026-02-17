@@ -3,13 +3,11 @@
  * Used by index (landing) and card-flow (canvas image, optional overrides).
  */
 window.COMPANIES_CONFIG = [
-  { id: '6deg',   image: 'assets/images/6d.png',       nameEn: '6 Degrees',   nameAr: '٦ درجات' },
   { id: 'burooj', image: 'assets/images/burooj.png',    nameEn: 'Burooj',      nameAr: 'بروج' },
   { id: 'buroojair', image: 'assets/images/Buroojair.png', nameEn: 'Burooj Air', nameAr: 'بروج إير' },
   { id: 'deets',  image: 'assets/images/deets.png',     nameEn: 'Deets',       nameAr: 'ديتس' },
   { id: 'ec',     image: 'assets/images/ec.png',       nameEn: 'EC',          nameAr: 'EC' },
-  { id: 'naqash', image: 'assets/images/naqash.png',   nameEn: 'Naqash',     nameAr: 'نقش' },
-  { id: 'pe',     image: 'assets/images/pe.png',       nameEn: 'PE',          nameAr: 'PE' }
+  { id: 'naqash', image: 'assets/images/naqash.png',   nameEn: 'Naqash',     nameAr: 'نقش' }
 ];
 
 /**
