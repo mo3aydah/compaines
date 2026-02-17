@@ -317,6 +317,13 @@
       var link = document.createElement('a');
       link.download = fileName;
       canvas.toBlob(function(blob) {
+        if (!blob) {
+          if (downloadBtn) {
+            downloadBtn.disabled = false;
+            downloadBtn.textContent = originalText;
+          }
+          return;
+        }
         link.href = URL.createObjectURL(blob);
         link.click();
         URL.revokeObjectURL(link.href);
