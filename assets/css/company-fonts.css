@@ -1,20 +1,20 @@
 /* Company-specific fonts */
 
-/* 6D Fonts */
+/* 6degrees Fonts */
 @font-face {
-  font-family: "6D-Arabic-Light";
+  font-family: "6degrees-Arabic-Light";
   src: url(../fonts/6D/01.%20Arabic%20Font/sst-arabic-light.ttf);
 }
 @font-face {
-  font-family: "6D-Arabic-Medium";
+  font-family: "6degrees-Arabic-Medium";
   src: url(../fonts/6D/01.%20Arabic%20Font/sst-arabic-medium.ttf);
 }
 @font-face {
-  font-family: "6D-English-Light";
+  font-family: "6degrees-English-Light";
   src: url(../fonts/6D/02.%20English%20Font/KonnectLight.otf);
 }
 @font-face {
-  font-family: "6D-English-Medium";
+  font-family: "6degrees-English-Medium";
   src: url(../fonts/6D/02.%20English%20Font/KonnectMedium.otf);
 }
 

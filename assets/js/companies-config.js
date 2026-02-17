@@ -3,6 +3,7 @@
  * Used by index (landing) and card-flow (canvas image, optional overrides).
  */
 window.COMPANIES_CONFIG = [
+  { id: '6degrees', image: 'assets/images/6d.png',       nameEn: '6 Degrees',   nameAr: '٦ درجات' },
   { id: 'burooj', image: 'assets/images/burooj.png',    nameEn: 'Burooj',      nameAr: 'بروج' },
   { id: 'buroojair', image: 'assets/images/Buroojair.png', nameEn: 'Burooj Air', nameAr: 'بروج إير' },
   { id: 'deets',  image: 'assets/images/deets.png',     nameEn: 'Deets',       nameAr: 'ديتس' },
@@ -15,12 +16,12 @@ window.COMPANIES_CONFIG = [
  */
 window.MESSAGES = {
   en: [
-    'Wishing you a blessed Ramadan and a joyful Eid.',
-    'May this Eid bring peace and happiness to you and your family.'
+    'Wishing you a Ramadan filled with mercy, peace, and blessings.',
+    'May your efforts be rewarded, and may your heart find serenity this Ramadan.'
   ],
   ar: [
-    'تقبل الله منا ومنكم صيامكم وقيامكم، وكل عام وأنتم بخير.',
-    'كل عام وأنتم بخير، أعاده الله عليكم باليمن والبركات.'
+    'نتمنى لكم شهر رمضان مليئاً بالرحمة والسلام والبركات.',
+    'نسأل اللّٰه أن يثيبكم على جهودكم، وأن يرزق قلوبكم الطمأنينة في هذا الشهر الكريم.'
   ]
 };
 

@@ -344,11 +344,18 @@
           deckContainer.addEventListener('touchmove', function(e) {
             var deltaX = e.touches[0].clientX - touchStartX;
             var deltaY = e.touches[0].clientY - touchStartY;
-            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+            // Only prevent default and handle swipe if horizontal movement is clearly dominant
+            // Allow vertical scrolling when user is scrolling up/down
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 15) {
+              // Horizontal swipe detected - prevent default only for horizontal movement
               isDragging = true;
               e.preventDefault();
               var offset = Math.max(-100, Math.min(100, deltaX * 0.5));
               deckContainer.style.transform = 'translateX(' + offset + 'px)';
+            } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+              // Vertical scroll detected - allow normal scrolling
+              isDragging = false;
+              // Don't prevent default - allow page to scroll
             }
           });
 

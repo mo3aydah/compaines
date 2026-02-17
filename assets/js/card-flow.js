@@ -192,9 +192,9 @@
   function getCompanyFont(companyId, lang, weight) {
     // weight: 'light' for messages, 'medium' or 'bold' for names
     var fontMap = {
-      '6deg': {
-        ar: { light: '6D-Arabic-Light', medium: '6D-Arabic-Medium' },
-        en: { light: '6D-English-Light', medium: '6D-English-Medium' }
+      '6degrees': {
+        ar: { light: '6degrees-Arabic-Light', medium: '6degrees-Arabic-Medium' },
+        en: { light: '6degrees-English-Light', medium: '6degrees-English-Medium' }
       },
       'burooj': {
         ar: { light: 'Burooj-Arabic-Light', medium: 'Burooj-Arabic-Regular' },
@@ -229,36 +229,65 @@
       return fontMap[companyId][langKey][weightKey];
     }
     
-    // Fallback to default font
-    return 'GESSTwoLight';
+    // Fallback to system fonts
+    return 'Arial, sans-serif';
   }
 
   function drawCard(context, forDownload) {
-    if (!cardImage || !cardImage.complete) return;
+    if (!cardImage) return;
+    // Check if image is loaded - either complete flag or has natural dimensions
+    if (!cardImage.complete && cardImage.naturalWidth === 0) {
+      return;
+    }
+    
+    // Ensure canvas dimensions match (only set if different to avoid context reset)
+    if (canvas.width !== imageWidth || canvas.height !== imageHeight) {
+      canvas.width = imageWidth;
+      canvas.height = imageHeight;
+      // Re-enable image smoothing after dimension change
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = 'high';
+    }
+    
     context.clearRect(0, 0, imageWidth, imageHeight);
     // Draw image at exact canvas dimensions to prevent scaling artifacts
-    context.drawImage(cardImage, 0, 0, imageWidth, imageHeight);
+    try {
+      context.drawImage(cardImage, 0, 0, imageWidth, imageHeight);
+    } catch (e) {
+      // Silently fail - image might not be ready
+      return;
+    }
 
     var messageText = getMessageText();
     var nameText = getName();
 
+    // Reset all text properties after any canvas dimension changes
     context.textAlign = 'center';
+    context.textBaseline = 'alphabetic'; // Use default baseline for proper rendering
     context.fillStyle = '#FFFFFF';
 
     // Message: smaller font, possibly multi-line - use lighter font
-    var msgFontFamily = getCompanyFont(companyId, lang, 'light');
-    var msgFont = '32pt ' + msgFontFamily;
+    var is6degrees = companyId === '6degrees';
+    var isNaqash = companyId === 'naqash';
+    // Use naqash fonts for 6degrees
+    var msgFontFamily = is6degrees ? getCompanyFont('naqash', lang, 'light') : getCompanyFont(companyId, lang, 'light');
+    // Use same font size as naqash
+    var msgFontSize = (is6degrees || isNaqash) ? '32pt' : '32pt'; // Same as naqash
+    // Build font string - format: "size fontFamily" (using pt like naqash)
+    var msgFont = msgFontSize + ' ' + msgFontFamily;
+    // Set font - must be done after any canvas dimension changes
     context.font = msgFont;
     var maxMsgWidth = imageWidth - 120;
     var msgLines = wrapText(context, messageText, maxMsgWidth);
-    // Lower positions for naqash card - much lower near bottom
-    var isNaqash = companyId === 'naqash';
+    // Lower positions for naqash and 6degrees cards - much lower near bottom
     var isDeets = companyId === 'deets';
     var isBuroojAir = companyId === 'buroojair';
     var isEC = companyId === 'ec';
     var msgY;
     if (isNaqash) {
       msgY = 1500;
+    } else if (is6degrees) {
+      msgY = 1550; // Move message down a little for 6degrees
     } else if (isDeets) {
       msgY = 1400; // Move message up more for deets
     } else if (isEC) {
@@ -266,17 +295,26 @@
     } else {
       msgY = 720;
     }
-    var lineHeight = 48;
+    // Use same line height as naqash
+    var lineHeight = (is6degrees || isNaqash) ? 48 : 48; // Same as naqash
     msgLines.forEach(function(line, i) {
       context.fillText(line, imageWidth / 2, msgY + i * lineHeight);
     });
 
     // Name: below message - use heavier/bolder font
-    var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
-    context.font = '40pt ' + nameFontFamily;
+    // Use naqash fonts for 6degrees
+    var nameFontFamily = is6degrees ? getCompanyFont('naqash', lang, 'medium') : getCompanyFont(companyId, lang, 'medium');
+    // Use same font size as naqash
+    var nameFontSize = (is6degrees || isNaqash) ? '40pt' : '40pt'; // Same as naqash
+    // Build font string - format: "size fontFamily" (using pt like naqash)
+    var nameFont = nameFontSize + ' ' + nameFontFamily;
+    // Set font - must be done after any canvas dimension changes
+    context.font = nameFont;
     var nameY;
     if (isNaqash) {
       nameY = 1650;
+    } else if (is6degrees) {
+      nameY = 1700; // Move name down a little for 6degrees
     } else if (isDeets) {
       nameY = 1550; // Move name up more for deets
     } else if (isBuroojAir) {
@@ -329,18 +367,44 @@
   }
 
   function renderPreview() {
+    // Always render, but try to wait for fonts if available
+    if (!cardImage) {
+      return;
+    }
+    // Check if image is complete or has natural dimensions (loaded)
+    if (!cardImage.complete && cardImage.naturalWidth === 0) {
+      // Image still loading, wait a bit
+      setTimeout(function() {
+        renderPreview();
+      }, 100);
+      return;
+    }
+    
+    // Render immediately - fonts will be used if available, fallback otherwise
+    // Don't wait for fonts as they may not load or may cause errors
+    drawCard(ctx, false);
+    
+    // Optionally try to re-render when fonts are ready (non-blocking)
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function() { drawCard(ctx, false); });
-    } else {
-      drawCard(ctx, false);
+      document.fonts.ready.then(function() {
+        setTimeout(function() {
+          drawCard(ctx, false);
+        }, 100);
+      }).catch(function() {
+        // Ignore font loading errors
+      });
     }
   }
 
   function loadImage(src, callback) {
     var img = new Image();
     img.crossOrigin = 'anonymous';
-    img.onload = function() { callback(null, img); };
-    img.onerror = function() { callback(new Error('Failed to load image')); };
+    img.onload = function() { 
+      callback(null, img); 
+    };
+    img.onerror = function() { 
+      callback(new Error('Failed to load image: ' + src)); 
+    };
     img.src = src;
   }
 
@@ -369,13 +433,28 @@
 
   function initCanvas() {
     showImageError(false);
+    if (!companyImageSrc) {
+      showImageError(true);
+      return;
+    }
     loadImage(companyImageSrc, function(err, img) {
       if (err || !img) {
         showImageError(true);
         return;
       }
       cardImage = img;
-      renderPreview();
+      // Ensure image is loaded before rendering
+      if (img.complete) {
+        renderPreview();
+      } else {
+        img.onload = function() {
+          renderPreview();
+        };
+        // Fallback: render after a delay even if onload doesn't fire
+        setTimeout(function() {
+          renderPreview();
+        }, 500);
+      }
     });
   }
 
@@ -389,40 +468,55 @@
       downloadBtn.textContent = u.downloading || 'Downloading…';
       downloadBtn.disabled = true;
     }
-    var doDownload = function() {
-      drawCard(ctx, true);
-      var nameInput = getName().replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
-      var fileName = nameInput ? 'EidCard_' + nameInput + '.png' : 'EidCard.png';
-      var link = document.createElement('a');
-      link.download = fileName;
-      canvas.toBlob(function(blob) {
-        if (!blob) {
-          if (downloadBtn) {
-            downloadBtn.disabled = false;
-            downloadBtn.textContent = originalText;
-          }
-          return;
-        }
-        link.href = URL.createObjectURL(blob);
-        link.click();
-        URL.revokeObjectURL(link.href);
+    
+    // Download immediately - fonts will be used if available
+    drawCard(ctx, true);
+    var nameInput = getName().replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+    var fileName = nameInput ? 'EidCard_' + nameInput + '.png' : 'EidCard.png';
+    var link = document.createElement('a');
+    link.download = fileName;
+    canvas.toBlob(function(blob) {
+      if (!blob) {
         if (downloadBtn) {
           downloadBtn.disabled = false;
           downloadBtn.textContent = originalText;
         }
-        var u = window.UI_STRINGS && window.UI_STRINGS[lang] ? window.UI_STRINGS[lang] : (window.UI_STRINGS && window.UI_STRINGS.en) || {};
-        var successEl = document.getElementById('downloadSuccessMsg');
-        if (successEl) {
-          successEl.textContent = u.downloadSuccess || 'Download started!';
-          successEl.removeAttribute('hidden');
-          setTimeout(function() { successEl.setAttribute('hidden', ''); }, 2500);
-        }
-      }, 'image/png');
-    };
+        return;
+      }
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      URL.revokeObjectURL(link.href);
+      if (downloadBtn) {
+        downloadBtn.disabled = false;
+        downloadBtn.textContent = originalText;
+      }
+      var u = window.UI_STRINGS && window.UI_STRINGS[lang] ? window.UI_STRINGS[lang] : (window.UI_STRINGS && window.UI_STRINGS.en) || {};
+      var successEl = document.getElementById('downloadSuccessMsg');
+      if (successEl) {
+        successEl.textContent = u.downloadSuccess || 'Download started!';
+        successEl.removeAttribute('hidden');
+        setTimeout(function() { successEl.setAttribute('hidden', ''); }, 2500);
+      }
+    }, 'image/png');
+    
+    // Optionally re-download when fonts are ready (non-blocking)
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(doDownload);
-    } else {
-      doDownload();
+      document.fonts.ready.then(function() {
+        setTimeout(function() {
+          drawCard(ctx, true);
+          canvas.toBlob(function(blob) {
+            if (blob) {
+              var link2 = document.createElement('a');
+              link2.download = fileName;
+              link2.href = URL.createObjectURL(blob);
+              link2.click();
+              URL.revokeObjectURL(link2.href);
+            }
+          }, 'image/png');
+        }, 100);
+      }).catch(function() {
+        // Ignore font loading errors
+      });
     }
   }
 
