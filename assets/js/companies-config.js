@@ -8,7 +8,8 @@ window.COMPANIES_CONFIG = [
   { id: 'buroojair', image: 'assets/images/Buroojair.png', nameEn: 'Burooj Air', nameAr: 'بروج إير' },
   { id: 'deets',  image: 'assets/images/deets.png',     nameEn: 'Deets',       nameAr: 'ديتس' },
   { id: 'ec',     image: 'assets/images/ec.png',       nameEn: 'EC',          nameAr: 'EC' },
-  { id: 'naqash', image: 'assets/images/naqash.png',   nameEn: 'Naqash',     nameAr: 'نقش' }
+  { id: 'naqash', image: 'assets/images/naqash.png',   nameEn: 'Naqash',     nameAr: 'نقش' },
+  { id: 'pe',     image: 'assets/images/promoe.png',   nameEn: 'PE',          nameAr: 'PE' }
 ];
 
 /**
@@ -16,12 +17,12 @@ window.COMPANIES_CONFIG = [
  */
 window.MESSAGES = {
   en: [
-    'Wishing you a Ramadan filled with mercy, peace, and blessings.',
-    'May your efforts be rewarded, and may your heart find serenity this Ramadan.'
+    'May Allah accept our good deeds and yours, and grant us the blessings of fasting and prayer.',
+    'Ramadan Mubarak to you and your loved ones. May you be blessed with goodness all year long.'
   ],
   ar: [
-    'نتمنى لكم شهر رمضان مليئاً بالرحمة والسلام والبركات.',
-    'نسأل اللّٰه أن يثيبكم على جهودكم، وأن يرزق قلوبكم الطمأنينة في هذا الشهر الكريم.'
+    'تقبل الله منا ومنكم صالح الأعمال\nوجعلنا الله من صوامه وقوامه',
+    'رمضان مبارك علينا وعليكم وكل عام وانتم بخير'
   ]
 };
 

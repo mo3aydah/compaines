@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,8 +24,8 @@
       </header>
 
       <div class="landing-hero">
-        <h1 class="landing-hero-title" id="landingHeroTitle">A Ramadan Greeting for Someone Special</h1>
-        <p class="landing-hero-subtitle" id="landingHeroSubtitle">Select your preferred design and create a personalized card to share with those who matter most.</p>
+        <h1 class="landing-hero-title" id="landingHeroTitle">تهنئة رمضانية لمن يعزّ عليك</h1>
+        <p class="landing-hero-subtitle" id="landingHeroSubtitle">اختر تصميم بطاقتك وأنشئ تهنئة مميزة تشاركها مع من تحب.</p>
       </div>
 
       <section class="company-cards-section" aria-labelledby="companyCardsSectionTitle">
@@ -132,8 +132,16 @@
     <script src="assets/js/card-flow.js"></script>
     <script>
       (function() {
-        var DEFAULT_LANG = 'en';
-        var lang = sessionStorage.getItem('card-lang') || DEFAULT_LANG;
+        var DEFAULT_LANG = 'ar';
+        // Always default to Arabic - check sessionStorage, but default to Arabic
+        var storedLang = sessionStorage.getItem('card-lang');
+        // Default to Arabic if no language is stored or if it's the first visit
+        var lang = storedLang || DEFAULT_LANG;
+        // Ensure Arabic is set as default in sessionStorage if not already set
+        if (!storedLang) {
+          sessionStorage.setItem('card-lang', DEFAULT_LANG);
+          lang = DEFAULT_LANG;
+        }
         var companies = window.COMPANIES_CONFIG || [];
 
         var titles = {

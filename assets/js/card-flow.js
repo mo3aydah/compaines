@@ -14,7 +14,7 @@
 
   // State
   var companyId = null;
-  var lang = 'en';
+  var lang = 'ar';
   var companyImageSrc = null;
   var selectedMessageIndex = -1;
   var cardImage = null;
@@ -26,7 +26,7 @@
 
   function initState(optionalCompanyId) {
     companyId = optionalCompanyId || getQueryParam('company') || sessionStorage.getItem('card-company');
-    lang = sessionStorage.getItem('card-lang') || 'en';
+    lang = sessionStorage.getItem('card-lang') || 'ar';
     if (!companyId || !window.COMPANIES_CONFIG) {
       if (window.location.pathname.indexOf('card.html') !== -1) window.location.href = 'index.html';
       return false;
@@ -264,11 +264,13 @@
     // Reset all text properties after any canvas dimension changes
     context.textAlign = 'center';
     context.textBaseline = 'alphabetic'; // Use default baseline for proper rendering
+    // Use white text color for all companies
     context.fillStyle = '#FFFFFF';
 
     // Message: smaller font, possibly multi-line - use lighter font
     var is6degrees = companyId === '6degrees';
     var isNaqash = companyId === 'naqash';
+    var isPE = companyId === 'pe';
     // Use naqash fonts for 6degrees
     var msgFontFamily = is6degrees ? getCompanyFont('naqash', lang, 'light') : getCompanyFont(companyId, lang, 'light');
     // Use same font size as naqash
@@ -284,8 +286,8 @@
     var isBuroojAir = companyId === 'buroojair';
     var isEC = companyId === 'ec';
     var msgY;
-    if (isNaqash) {
-      msgY = 1500;
+    if (isNaqash || isPE) {
+      msgY = 1500; // Same position for naqash and PE
     } else if (is6degrees) {
       msgY = 1550; // Move message down a little for 6degrees
     } else if (isDeets) {
@@ -311,8 +313,8 @@
     // Set font - must be done after any canvas dimension changes
     context.font = nameFont;
     var nameY;
-    if (isNaqash) {
-      nameY = 1650;
+    if (isNaqash || isPE) {
+      nameY = 1650; // Same position for naqash and PE
     } else if (is6degrees) {
       nameY = 1700; // Move name down a little for 6degrees
     } else if (isDeets) {
@@ -565,7 +567,7 @@
       if (!company) return;
       companyId = selectedCompanyId;
       companyImageSrc = company.image;
-      lang = sessionStorage.getItem('card-lang') || 'en';
+      lang = sessionStorage.getItem('card-lang') || 'ar';
       selectedMessageIndex = -1;
       applyUIStrings();
       renderMessageOptions();
