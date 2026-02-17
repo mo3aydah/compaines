@@ -188,6 +188,91 @@
     return el ? el.value.trim() : '';
   }
 
+  // Get font file path for a company, language, and weight (relative to HTML file)
+  function getFontPath(companyId, lang, weight) {
+    var fontPathMap = {
+      '6degrees': {
+        ar: { 
+          light: 'assets/fonts/6D/01.%20Arabic%20Font/sst-arabic-light.ttf',
+          medium: 'assets/fonts/6D/01.%20Arabic%20Font/sst-arabic-medium.ttf'
+        },
+        en: { 
+          light: 'assets/fonts/6D/02.%20English%20Font/KonnectLight.otf',
+          medium: 'assets/fonts/6D/02.%20English%20Font/KonnectMedium.otf'
+        }
+      },
+      'burooj': {
+        ar: { 
+          light: 'assets/fonts/burooj/01.%20Arabic%20Font/alqabas-light.ttf',
+          medium: 'assets/fonts/burooj/01.%20Arabic%20Font/alqabas-regular.ttf'
+        },
+        en: { 
+          light: 'assets/fonts/burooj/02.%20English%20Font/RedHatDisplay-Light.ttf',
+          medium: 'assets/fonts/burooj/02.%20English%20Font/RedHatDisplay-Medium.ttf'
+        }
+      },
+      'buroojair': {
+        ar: { 
+          light: 'assets/fonts/burooj%20air/01.%20Arabic%20Font/NeoSansArabicLight.ttf',
+          medium: 'assets/fonts/burooj%20air/01.%20Arabic%20Font/Neo_Sans_Medium.ttf'
+        },
+        en: { 
+          light: 'assets/fonts/burooj%20air/02.%20English%20Font/helvetica-light-587ebe5a59211.ttf',
+          medium: 'assets/fonts/burooj%20air/02.%20English%20Font/Helvetica-Bold.ttf'
+        }
+      },
+      'deets': {
+        ar: { 
+          light: 'assets/fonts/deets/01.%20Arabic%20Font/ArbFONTS-FFShamelFamily-SansOneBook.ttf',
+          medium: 'assets/fonts/deets/01.%20Arabic%20Font/ArbFONTS-FFShamelFamily-SansOneBold.ttf'
+        },
+        en: { 
+          light: 'assets/fonts/deets/02.%20English%20Font/Urbane-Thin.ttf',
+          medium: 'assets/fonts/deets/02.%20English%20Font/Urbane-Medium.ttf'
+        }
+      },
+      'ec': {
+        ar: { 
+          light: 'assets/fonts/EC/01.%20Arabic%20Font/GE%20SS%20TWO%20LIGHT.ttf',
+          medium: 'assets/fonts/EC/01.%20Arabic%20Font/GE%20SS%20TWO%20MEDIUM.otf'
+        },
+        en: { 
+          light: 'assets/fonts/EC/02.%20English%20Font/Montserrat-Light.ttf',
+          medium: 'assets/fonts/EC/02.%20English%20Font/Montserrat-Medium.ttf'
+        }
+      },
+      'naqash': {
+        ar: { 
+          light: 'assets/fonts/naqsh/01.%20Arabic%20Font/riyad-bank-Regular.ttf',
+          medium: 'assets/fonts/naqsh/01.%20Arabic%20Font/riyad-bank-Bold.ttf'
+        },
+        en: { 
+          light: 'assets/fonts/naqsh/02.%20English%20Font/alfont_com_29LTZeyn-Regular.ttf',
+          medium: 'assets/fonts/naqsh/02.%20English%20Font/alfont_com_29LTZeyn-Medium%20%281%29.ttf'
+        }
+      },
+      'pe': {
+        ar: { 
+          light: 'assets/fonts/PE/01.%20Arabic%20Font/GE%20SS%20TWO%20LIGHT.ttf',
+          medium: 'assets/fonts/PE/01.%20Arabic%20Font/GE%20SS%20TWO%20MEDIUM.otf'
+        },
+        en: { 
+          light: 'assets/fonts/PE/02.%20English%20Font/Gotham-Font/Gotham-Light.otf',
+          medium: 'assets/fonts/PE/02.%20English%20Font/Gotham-Font/GothamMedium.ttf'
+        }
+      }
+    };
+    
+    var langKey = lang === 'ar' ? 'ar' : 'en';
+    var weightKey = weight === 'light' ? 'light' : 'medium';
+    
+    if (fontPathMap[companyId] && fontPathMap[companyId][langKey] && fontPathMap[companyId][langKey][weightKey]) {
+      return fontPathMap[companyId][langKey][weightKey];
+    }
+    
+    return null;
+  }
+
   // Get company-specific font family based on company ID, language, and weight
   function getCompanyFont(companyId, lang, weight) {
     // weight: 'light' for messages, 'medium' or 'bold' for names
@@ -233,6 +318,53 @@
     return 'Arial, sans-serif';
   }
 
+  // Load fonts explicitly for canvas rendering
+  var loadedFonts = {};
+  function loadFontsForCompany(companyId, lang) {
+    if (!companyId || !window.FontFace) return Promise.resolve();
+    
+    var msgFontFamily = getCompanyFont(companyId, lang, 'light');
+    var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
+    var msgFontPath = getFontPath(companyId, lang, 'light');
+    var nameFontPath = getFontPath(companyId, lang, 'medium');
+    
+    var promises = [];
+    
+    // Load message font if not already loaded
+    if (msgFontPath && !loadedFonts[msgFontFamily]) {
+      try {
+        var msgFont = new FontFace(msgFontFamily, 'url(' + msgFontPath + ')');
+        promises.push(msgFont.load().then(function(loadedFont) {
+          document.fonts.add(loadedFont);
+          loadedFonts[msgFontFamily] = true;
+        }).catch(function(err) {
+          console.warn('Failed to load font:', msgFontFamily, err);
+        }));
+      } catch (e) {
+        console.warn('FontFace not supported or error:', e);
+      }
+    }
+    
+    // Load name font if not already loaded
+    if (nameFontPath && !loadedFonts[nameFontFamily]) {
+      try {
+        var nameFont = new FontFace(nameFontFamily, 'url(' + nameFontPath + ')');
+        promises.push(nameFont.load().then(function(loadedFont) {
+          document.fonts.add(loadedFont);
+          loadedFonts[nameFontFamily] = true;
+        }).catch(function(err) {
+          console.warn('Failed to load font:', nameFontFamily, err);
+        }));
+      } catch (e) {
+        console.warn('FontFace not supported or error:', e);
+      }
+    }
+    
+    return Promise.all(promises).catch(function() {
+      // Continue even if fonts fail to load
+    });
+  }
+
   function drawCard(context, forDownload) {
     if (!cardImage) return;
     // Check if image is loaded - either complete flag or has natural dimensions
@@ -271,8 +403,8 @@
     var is6degrees = companyId === '6degrees';
     var isNaqash = companyId === 'naqash';
     var isPE = companyId === 'pe';
-    // Use naqash fonts for 6degrees
-    var msgFontFamily = is6degrees ? getCompanyFont('naqash', lang, 'light') : getCompanyFont(companyId, lang, 'light');
+    // Use company-specific fonts
+    var msgFontFamily = getCompanyFont(companyId, lang, 'light');
     // Use same font size as naqash
     var msgFontSize = (is6degrees || isNaqash) ? '32pt' : '32pt'; // Same as naqash
     // Build font string - format: "size fontFamily" (using pt like naqash)
@@ -304,8 +436,8 @@
     });
 
     // Name: below message - use heavier/bolder font
-    // Use naqash fonts for 6degrees
-    var nameFontFamily = is6degrees ? getCompanyFont('naqash', lang, 'medium') : getCompanyFont(companyId, lang, 'medium');
+    // Use company-specific fonts
+    var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
     // Use same font size as naqash
     var nameFontSize = (is6degrees || isNaqash) ? '40pt' : '40pt'; // Same as naqash
     // Build font string - format: "size fontFamily" (using pt like naqash)
@@ -382,20 +514,44 @@
       return;
     }
     
-    // Render immediately - fonts will be used if available, fallback otherwise
-    // Don't wait for fonts as they may not load or may cause errors
-    drawCard(ctx, false);
-    
-    // Optionally try to re-render when fonts are ready (non-blocking)
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function() {
-        setTimeout(function() {
-          drawCard(ctx, false);
-        }, 100);
-      }).catch(function() {
-        // Ignore font loading errors
-      });
+    // Check if fonts are loaded before rendering
+    function renderWithFonts() {
+      if (document.fonts && document.fonts.check) {
+        // Get the font families we need for this company
+        var msgFontFamily = getCompanyFont(companyId, lang, 'light');
+        var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
+        
+        // Check if fonts are loaded (using a simple size check)
+        try {
+          var msgFontLoaded = document.fonts.check('12px ' + msgFontFamily);
+          var nameFontLoaded = document.fonts.check('12px ' + nameFontFamily);
+          
+          // If fonts are loaded, render immediately
+          if (msgFontLoaded && nameFontLoaded) {
+            drawCard(ctx, false);
+            return;
+          }
+        } catch (e) {
+          // If check fails, proceed with rendering anyway
+        }
+      }
+      
+      // Render immediately (fonts may load later)
+      drawCard(ctx, false);
+      
+      // Re-render when fonts are ready
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() {
+          setTimeout(function() {
+            drawCard(ctx, false);
+          }, 200);
+        }).catch(function() {
+          // Ignore font loading errors
+        });
+      }
     }
+    
+    renderWithFonts();
   }
 
   function loadImage(src, callback) {
@@ -439,24 +595,82 @@
       showImageError(true);
       return;
     }
-    loadImage(companyImageSrc, function(err, img) {
-      if (err || !img) {
-        showImageError(true);
-        return;
-      }
-      cardImage = img;
-      // Ensure image is loaded before rendering
-      if (img.complete) {
-        renderPreview();
-      } else {
-        img.onload = function() {
+    
+    // Load fonts first, then load image
+    loadFontsForCompany(companyId, lang).then(function() {
+      loadImage(companyImageSrc, function(err, img) {
+        if (err || !img) {
+          showImageError(true);
+          return;
+        }
+        cardImage = img;
+        
+        // Wait for fonts to be ready before rendering
+        function renderWhenReady() {
+          if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function() {
+              // Small delay to ensure fonts are fully loaded
+              setTimeout(function() {
+                if (img.complete) {
+                  renderPreview();
+                } else {
+                  img.onload = function() {
+                    renderPreview();
+                  };
+                  setTimeout(function() {
+                    renderPreview();
+                  }, 500);
+                }
+              }, 200);
+            }).catch(function() {
+              // If fonts.ready fails, render anyway
+              if (img.complete) {
+                renderPreview();
+              } else {
+                img.onload = function() {
+                  renderPreview();
+                };
+                setTimeout(function() {
+                  renderPreview();
+                }, 500);
+              }
+            });
+          } else {
+            // No font API, render immediately
+            if (img.complete) {
+              renderPreview();
+            } else {
+              img.onload = function() {
+                renderPreview();
+              };
+              setTimeout(function() {
+                renderPreview();
+              }, 500);
+            }
+          }
+        }
+        
+        renderWhenReady();
+      });
+    }).catch(function() {
+      // If font loading fails, proceed anyway
+      loadImage(companyImageSrc, function(err, img) {
+        if (err || !img) {
+          showImageError(true);
+          return;
+        }
+        cardImage = img;
+        if (img.complete) {
           renderPreview();
-        };
-        // Fallback: render after a delay even if onload doesn't fire
-        setTimeout(function() {
-          renderPreview();
-        }, 500);
-      }
+        } else {
+          img.onload = function() {
+            renderPreview();
+          };
+          setTimeout(function() {
+            renderPreview();
+          }, 500);
+        }
+      });
     });
   }
 
