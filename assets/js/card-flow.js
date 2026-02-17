@@ -7,6 +7,10 @@
   var ctx = canvas.getContext('2d');
   var imageWidth = 1080;
   var imageHeight = 1920;
+  
+  // Enable high-quality image smoothing for crisp logo rendering
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   // State
   var companyId = null;
@@ -187,7 +191,8 @@
   function drawCard(context, forDownload) {
     if (!cardImage || !cardImage.complete) return;
     context.clearRect(0, 0, imageWidth, imageHeight);
-    context.drawImage(cardImage, 0, 0);
+    // Draw image at exact canvas dimensions to prevent scaling artifacts
+    context.drawImage(cardImage, 0, 0, imageWidth, imageHeight);
 
     var messageText = getMessageText();
     var nameText = getName();
@@ -200,7 +205,21 @@
     context.font = msgFont;
     var maxMsgWidth = imageWidth - 120;
     var msgLines = wrapText(context, messageText, maxMsgWidth);
-    var msgY = 720;
+    // Lower positions for naqash card - much lower near bottom
+    var isNaqash = companyId === 'naqash';
+    var isDeets = companyId === 'deets';
+    var isBuroojAir = companyId === 'buroojair';
+    var isEC = companyId === 'ec';
+    var msgY;
+    if (isNaqash) {
+      msgY = 1500;
+    } else if (isDeets) {
+      msgY = 1400; // Move message up more for deets
+    } else if (isEC) {
+      msgY = 800; // Move message down a little for EC
+    } else {
+      msgY = 720;
+    }
     var lineHeight = 48;
     msgLines.forEach(function(line, i) {
       context.fillText(line, imageWidth / 2, msgY + i * lineHeight);
@@ -208,7 +227,20 @@
 
     // Name: below message
     context.font = '40pt GESSTwoLight';
-    var nameY = 900;
+    var nameY;
+    if (isNaqash) {
+      nameY = 1650;
+    } else if (isDeets) {
+      nameY = 1550; // Move name up more for deets
+    } else if (isBuroojAir) {
+      // Reduce space between message and name for burooj air
+      var lastMsgLineY = msgY + (msgLines.length - 1) * lineHeight;
+      nameY = lastMsgLineY + 60; // Reduced from default 180px gap to 60px
+    } else if (isEC) {
+      nameY = 980; // Move name down a little for EC
+    } else {
+      nameY = 900;
+    }
     context.fillText(nameText || '', imageWidth / 2, nameY);
   }
 
@@ -386,11 +418,11 @@
       bindStepEvents();
     }
   } else {
-    window.startCardFlow = function(companyId) {
-      if (!companyId || !window.COMPANIES_CONFIG) return;
-      var company = window.COMPANIES_CONFIG.find(function(c) { return c.id === companyId; });
+    window.startCardFlow = function(selectedCompanyId) {
+      if (!selectedCompanyId || !window.COMPANIES_CONFIG) return;
+      var company = window.COMPANIES_CONFIG.find(function(c) { return c.id === selectedCompanyId; });
       if (!company) return;
-      companyId = companyId;
+      companyId = selectedCompanyId;
       companyImageSrc = company.image;
       lang = sessionStorage.getItem('card-lang') || 'en';
       selectedMessageIndex = -1;

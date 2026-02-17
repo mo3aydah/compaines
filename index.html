@@ -40,7 +40,6 @@
               <button type="button" class="card-preview-modal-close" id="cardPreviewModalClose" aria-label="Close">×</button>
               <img class="card-preview-modal-img" id="cardPreviewModalImg" alt="Card preview" />
               <div class="card-preview-modal-info">
-                <h3 class="card-preview-modal-title" id="cardPreviewModalTitle"></h3>
                 <button type="button" class="btn btn-light card-preview-modal-select" id="cardPreviewModalSelect">Select this card</button>
               </div>
             </div>
@@ -182,17 +181,11 @@
             });
           }
           // Update preview modal text if open
-          var previewModalTitle = document.getElementById('cardPreviewModalTitle');
           var previewModalSelect = document.getElementById('cardPreviewModalSelect');
-          if (previewModalTitle && previewModalSelect) {
+          if (previewModalSelect) {
             var activeCard = deckContainer ? deckContainer.querySelector('.company-card-deck-item.active') : null;
             if (activeCard) {
-              var cardId = activeCard.getAttribute('data-company-id');
-              var company = companies.find(function(c) { return c.id === cardId; });
-              if (company) {
-                previewModalTitle.textContent = lang === 'ar' ? company.nameAr : company.nameEn;
-                previewModalSelect.textContent = lang === 'ar' ? 'اختر هذه البطاقة' : 'Select this card';
-              }
+              previewModalSelect.textContent = lang === 'ar' ? 'اختر هذه البطاقة' : 'Select this card';
             }
           }
           updateModalLabels();
@@ -468,8 +461,8 @@
                   updateDeckBackground();
                 }
               };
-              // Preload image for background
-              if (i === Math.floor(companies.length / 2)) {
+              // Preload naqash image for background
+              if (c.id === 'naqash') {
                 var preloadImg = new Image();
                 preloadImg.src = c.image;
               }
@@ -477,11 +470,9 @@
               var showPreviewModal = function() {
                 var modal = document.getElementById('cardPreviewModal');
                 var modalImg = document.getElementById('cardPreviewModalImg');
-                var modalTitle = document.getElementById('cardPreviewModalTitle');
                 var modalSelect = document.getElementById('cardPreviewModalSelect');
-                if (modal && modalImg && modalTitle && modalSelect) {
+                if (modal && modalImg && modalSelect) {
                   modalImg.src = c.image;
-                  modalTitle.textContent = lang === 'ar' ? c.nameAr : c.nameEn;
                   modalSelect.textContent = lang === 'ar' ? 'اختر هذه البطاقة' : 'Select this card';
                   modal.setAttribute('data-company-id', c.id);
                   modal.removeAttribute('hidden');
@@ -512,7 +503,9 @@
               // Hover preview removed to avoid accidental triggers
               deckContainer.appendChild(card);
             });
-            var startIndex = Math.floor(companies.length / 2);
+            // Find naqash index, default to 0 if not found
+            var naqashIndex = companies.findIndex(function(c) { return c.id === 'naqash'; });
+            var startIndex = naqashIndex >= 0 ? naqashIndex : 0;
             updateDeckPosition(startIndex);
             initDeckSwipe();
             // Initial background update after images load

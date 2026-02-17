@@ -9,8 +9,7 @@ window.COMPANIES_CONFIG = [
   { id: 'deets',  image: 'assets/images/deets.png',     nameEn: 'Deets',       nameAr: 'ديتس' },
   { id: 'ec',     image: 'assets/images/ec.png',       nameEn: 'EC',          nameAr: 'EC' },
   { id: 'naqash', image: 'assets/images/naqash.png',   nameEn: 'Naqash',     nameAr: 'نقش' },
-  { id: 'pe',     image: 'assets/images/pe.png',       nameEn: 'PE',          nameAr: 'PE' },
-  { id: 'zahma',  image: 'assets/images/zahma.png',    nameEn: 'Zahma',      nameAr: 'زحمة' }
+  { id: 'pe',     image: 'assets/images/pe.png',       nameEn: 'PE',          nameAr: 'PE' }
 ];
 
 /**
