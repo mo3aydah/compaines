@@ -188,6 +188,51 @@
     return el ? el.value.trim() : '';
   }
 
+  // Get company-specific font family based on company ID, language, and weight
+  function getCompanyFont(companyId, lang, weight) {
+    // weight: 'light' for messages, 'medium' or 'bold' for names
+    var fontMap = {
+      '6deg': {
+        ar: { light: '6D-Arabic-Light', medium: '6D-Arabic-Medium' },
+        en: { light: '6D-English-Light', medium: '6D-English-Medium' }
+      },
+      'burooj': {
+        ar: { light: 'Burooj-Arabic-Light', medium: 'Burooj-Arabic-Regular' },
+        en: { light: 'Burooj-English-Light', medium: 'Burooj-English-Medium' }
+      },
+      'buroojair': {
+        ar: { light: 'BuroojAir-Arabic-Light', medium: 'BuroojAir-Arabic-Medium' },
+        en: { light: 'BuroojAir-English-Light', medium: 'BuroojAir-English-Bold' }
+      },
+      'deets': {
+        ar: { light: 'Deets-Arabic-Book', medium: 'Deets-Arabic-Bold' },
+        en: { light: 'Deets-English-Thin', medium: 'Deets-English-Medium' }
+      },
+      'ec': {
+        ar: { light: 'EC-Arabic-Light', medium: 'EC-Arabic-Medium' },
+        en: { light: 'EC-English-Light', medium: 'EC-English-Medium' }
+      },
+      'naqash': {
+        ar: { light: 'Naqash-Arabic-Regular', medium: 'Naqash-Arabic-Bold' },
+        en: { light: 'Naqash-English-Regular', medium: 'Naqash-English-Medium' }
+      },
+      'pe': {
+        ar: { light: 'PE-Arabic-Light', medium: 'PE-Arabic-Medium' },
+        en: { light: 'PE-English-Light', medium: 'PE-English-Medium' }
+      }
+    };
+    
+    var langKey = lang === 'ar' ? 'ar' : 'en';
+    var weightKey = weight === 'light' ? 'light' : 'medium';
+    
+    if (fontMap[companyId] && fontMap[companyId][langKey] && fontMap[companyId][langKey][weightKey]) {
+      return fontMap[companyId][langKey][weightKey];
+    }
+    
+    // Fallback to default font
+    return 'GESSTwoLight';
+  }
+
   function drawCard(context, forDownload) {
     if (!cardImage || !cardImage.complete) return;
     context.clearRect(0, 0, imageWidth, imageHeight);
@@ -200,8 +245,9 @@
     context.textAlign = 'center';
     context.fillStyle = '#FFFFFF';
 
-    // Message: smaller font, possibly multi-line
-    var msgFont = '32pt GESSTwoLight';
+    // Message: smaller font, possibly multi-line - use lighter font
+    var msgFontFamily = getCompanyFont(companyId, lang, 'light');
+    var msgFont = '32pt ' + msgFontFamily;
     context.font = msgFont;
     var maxMsgWidth = imageWidth - 120;
     var msgLines = wrapText(context, messageText, maxMsgWidth);
@@ -225,8 +271,9 @@
       context.fillText(line, imageWidth / 2, msgY + i * lineHeight);
     });
 
-    // Name: below message
-    context.font = '40pt GESSTwoLight';
+    // Name: below message - use heavier/bolder font
+    var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
+    context.font = '40pt ' + nameFontFamily;
     var nameY;
     if (isNaqash) {
       nameY = 1650;

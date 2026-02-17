@@ -1,0 +1,127 @@
+/* Company-specific fonts */
+
+/* 6D Fonts */
+@font-face {
+  font-family: "6D-Arabic-Light";
+  src: url(../fonts/6D/01.%20Arabic%20Font/sst-arabic-light.ttf);
+}
+@font-face {
+  font-family: "6D-Arabic-Medium";
+  src: url(../fonts/6D/01.%20Arabic%20Font/sst-arabic-medium.ttf);
+}
+@font-face {
+  font-family: "6D-English-Light";
+  src: url(../fonts/6D/02.%20English%20Font/KonnectLight.otf);
+}
+@font-face {
+  font-family: "6D-English-Medium";
+  src: url(../fonts/6D/02.%20English%20Font/KonnectMedium.otf);
+}
+
+/* Burooj Fonts */
+@font-face {
+  font-family: "Burooj-Arabic-Light";
+  src: url(../fonts/burooj/01.%20Arabic%20Font/alqabas-light.ttf);
+}
+@font-face {
+  font-family: "Burooj-Arabic-Regular";
+  src: url(../fonts/burooj/01.%20Arabic%20Font/alqabas-regular.ttf);
+}
+@font-face {
+  font-family: "Burooj-English-Light";
+  src: url(../fonts/burooj/02.%20English%20Font/RedHatDisplay-Light.ttf);
+}
+@font-face {
+  font-family: "Burooj-English-Medium";
+  src: url(../fonts/burooj/02.%20English%20Font/RedHatDisplay-Medium.ttf);
+}
+
+/* Burooj Air Fonts */
+@font-face {
+  font-family: "BuroojAir-Arabic-Light";
+  src: url(../fonts/burooj%20air/01.%20Arabic%20Font/NeoSansArabicLight.ttf);
+}
+@font-face {
+  font-family: "BuroojAir-Arabic-Medium";
+  src: url(../fonts/burooj%20air/01.%20Arabic%20Font/Neo_Sans_Medium.ttf);
+}
+@font-face {
+  font-family: "BuroojAir-English-Light";
+  src: url(../fonts/burooj%20air/02.%20English%20Font/helvetica-light-587ebe5a59211.ttf);
+}
+@font-face {
+  font-family: "BuroojAir-English-Bold";
+  src: url(../fonts/burooj%20air/02.%20English%20Font/Helvetica-Bold.ttf);
+}
+
+/* Deets Fonts */
+@font-face {
+  font-family: "Deets-Arabic-Book";
+  src: url(../fonts/deets/01.%20Arabic%20Font/ArbFONTS-FFShamelFamily-SansOneBook.ttf);
+}
+@font-face {
+  font-family: "Deets-Arabic-Bold";
+  src: url(../fonts/deets/01.%20Arabic%20Font/ArbFONTS-FFShamelFamily-SansOneBold.ttf);
+}
+@font-face {
+  font-family: "Deets-English-Thin";
+  src: url(../fonts/deets/02.%20English%20Font/Urbane-Thin.ttf);
+}
+@font-face {
+  font-family: "Deets-English-Medium";
+  src: url(../fonts/deets/02.%20English%20Font/Urbane-Medium.ttf);
+}
+
+/* EC Fonts */
+@font-face {
+  font-family: "EC-Arabic-Light";
+  src: url(../fonts/EC/01.%20Arabic%20Font/GE%20SS%20TWO%20LIGHT.ttf);
+}
+@font-face {
+  font-family: "EC-Arabic-Medium";
+  src: url(../fonts/EC/01.%20Arabic%20Font/GE%20SS%20TWO%20MEDIUM.otf);
+}
+@font-face {
+  font-family: "EC-English-Light";
+  src: url(../fonts/EC/02.%20English%20Font/Montserrat-Light.ttf);
+}
+@font-face {
+  font-family: "EC-English-Medium";
+  src: url(../fonts/EC/02.%20English%20Font/Montserrat-Medium.ttf);
+}
+
+/* Naqash Fonts */
+@font-face {
+  font-family: "Naqash-Arabic-Regular";
+  src: url(../fonts/naqsh/01.%20Arabic%20Font/riyad-bank-Regular.ttf);
+}
+@font-face {
+  font-family: "Naqash-Arabic-Bold";
+  src: url(../fonts/naqsh/01.%20Arabic%20Font/riyad-bank-Bold.ttf);
+}
+@font-face {
+  font-family: "Naqash-English-Regular";
+  src: url(../fonts/naqsh/02.%20English%20Font/alfont_com_29LTZeyn-Regular.ttf);
+}
+@font-face {
+  font-family: "Naqash-English-Medium";
+  src: url(../fonts/naqsh/02.%20English%20Font/alfont_com_29LTZeyn-Medium%20%281%29.ttf);
+}
+
+/* PE Fonts */
+@font-face {
+  font-family: "PE-Arabic-Light";
+  src: url(../fonts/PE/01.%20Arabic%20Font/GE%20SS%20TWO%20LIGHT.ttf);
+}
+@font-face {
+  font-family: "PE-Arabic-Medium";
+  src: url(../fonts/PE/01.%20Arabic%20Font/GE%20SS%20TWO%20MEDIUM.otf);
+}
+@font-face {
+  font-family: "PE-English-Light";
+  src: url(../fonts/PE/02.%20English%20Font/Gotham-Font/Gotham-Light.otf);
+}
+@font-face {
+  font-family: "PE-English-Medium";
+  src: url(../fonts/PE/02.%20English%20Font/Gotham-Font/GothamMedium.ttf);
+}
