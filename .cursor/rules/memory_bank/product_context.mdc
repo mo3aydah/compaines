@@ -1,0 +1,35 @@
+# Product Context: Greetings Card Generator
+
+## Why the Project Exists
+- **Problem**: Users need a simple, branded way to create personalized Ramadan/Eid greeting cards without design tools.
+- **Solution**: A guided web flow: pick a company card and language, then choose message, add name, and download—all in one place.
+
+## Target Audience
+- End users sending Ramadan/Eid wishes (personal or professional).
+- Arabic- and English-speaking users; UI and messages must support both.
+
+## User Experience (High Level)
+
+```mermaid
+flowchart LR
+    A["Landing: Preview<br>Company Cards"] --> B["Choose<br>Language"]
+    B --> C["Step 1:<br>Message"]
+    C --> D["Step 2:<br>Name"]
+    D --> E["Step 3:<br>Preview & Download"]
+```
+
+*Diagram: User flow from landing (company showcase + language) through the three personalization steps to download.*
+
+1. **Landing**: User sees previews of all company cards and selects a language (Arabic or English). Choosing a card enters the flow for that company.
+2. **Step 1 – Message**: User picks one of the pre-defined messages (shown in the selected language).
+3. **Step 2 – Name**: User enters the name to appear on the card.
+4. **Step 3 – Preview & Download**: User sees the final card and downloads it as PNG.
+
+## Critical Success Factors (User Perspective)
+- Clear preview of each company card before starting.
+- Obvious language switch and consistent use of that language for all steps.
+- Minimal steps (three) after landing.
+- Reliable preview and download with correct fonts and layout (including RTL for Arabic).
+
+## Product Vision
+A single, multi-company greeting card hub where users choose a card and language, then quickly personalize and download—with a navy-themed, responsive UI and optional analytics (e.g. SheetDB).

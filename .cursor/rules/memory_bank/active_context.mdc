@@ -1,0 +1,22 @@
+# Active Context: Current Operations
+
+## Current Focus
+- **New flow implemented.** Entry point: `index.html` (landing) → choose language and company card → `card.html?company=<id>` (3 steps: message, name, preview & download).
+
+## Very Next Steps
+1. **Optional**: Add SheetDB tracking when user downloads a card (see `progress.mdc`).
+2. **Optional**: Add or remove companies in `assets/js/companies-config.js` and ensure each has a card image in `assets/images/`.
+3. Legacy single-page company HTML (e.g. `6deg.html`, `zahma.html`) are unchanged; they can be kept for direct links or phased out.
+
+## Active Decisions / Considerations
+- All 8 existing companies (6deg, burooj, buroojair, deets, ec, naqash, pe, zahma) are on the landing; project description had mentioned "Almanaa only"—if only one company is desired, reduce entries in `COMPANIES_CONFIG` and optionally remove legacy HTML.
+- Landing is a single index page; card flow is one shared page (`card.html`) with `?company=` parameter.
+
+## Recent Significant Changes
+- **Landing** (`index.html`): Company grid, language toggle (AR/EN), sessionStorage for language.
+- **Card flow** (`card.html`, `assets/js/card-flow.js`, `assets/css/card-flow.css`): 3 steps with step dots, Back/Next, Canvas render (message + name), PNG download, bilingual UI and RTL.
+- **Config** (`assets/js/companies-config.js`): Companies, messages (2 per language), UI strings (en/ar).
+- Memory Bank `progress.mdc` updated to reflect completed tasks.
+
+## Temporary State
+- No blocking issues. To test: open `index.html`, pick language and a company, complete the three steps and download.

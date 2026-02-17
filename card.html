@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="cardPage">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Eid Card | بطاقتك للعيد</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/css/card-flow.css" />
+  </head>
+  <body>
+    <div class="card-flow-container">
+      <div id="cardFlowLive" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+      <div class="step-indicator" id="stepIndicator" role="tablist">
+        <button type="button" class="step-tab" data-step="1" role="tab" aria-selected="true">
+          <span class="step-dot" data-step="1"></span>
+          <span class="step-tab-label" id="stepTabLabel1">Message</span>
+        </button>
+        <button type="button" class="step-tab" data-step="2" role="tab" aria-selected="false">
+          <span class="step-dot" data-step="2"></span>
+          <span class="step-tab-label" id="stepTabLabel2">Name</span>
+        </button>
+        <button type="button" class="step-tab" data-step="3" role="tab" aria-selected="false">
+          <span class="step-dot" data-step="3"></span>
+          <span class="step-tab-label" id="stepTabLabel3">Preview</span>
+        </button>
+      </div>
+
+      <div class="card-preview-wrap">
+        <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+        <div class="card-preview-error" id="previewImageError" hidden>
+          <p class="card-preview-error-text" id="previewImageErrorText"></p>
+          <a href="index.html" class="btn btn-outline-light btn-sm mt-2" id="previewImageErrorBack"></a>
+        </div>
+      </div>
+
+      <!-- Step 1: Message -->
+      <div class="step-panel active" id="panelStep1" data-step="1">
+        <h2 id="step1Title">Choose your message</h2>
+        <div class="message-options" id="messageOptions"></div>
+        <div class="card-flow-actions">
+          <a href="index.html" class="btn btn-outline-light" id="backToCardsFromStep1">Back</a>
+          <button type="button" class="btn btn-light" id="nextFrom1">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Name -->
+      <div class="step-panel" id="panelStep2" data-step="2">
+        <h2 id="step2Title">Enter your name</h2>
+        <div class="name-input-wrap">
+          <input type="text" class="form-control" id="nameInput" placeholder="Enter your name" autocomplete="name" />
+        </div>
+        <div class="card-flow-actions">
+          <button type="button" class="btn btn-outline-light" id="backTo1">Back</button>
+          <button type="button" class="btn btn-light" id="nextFrom2">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Preview & Download -->
+      <div class="step-panel" id="panelStep3" data-step="3">
+        <h2 id="step3Title">Preview & Download</h2>
+        <p class="card-flow-hint" id="nameReminder" hidden></p>
+        <button type="button" class="btn btn-link card-flow-hint-link" id="nameReminderGoToStep2" hidden>Edit name</button>
+        <p class="card-flow-success" id="downloadSuccessMsg" hidden></p>
+        <div class="card-flow-actions">
+          <button type="button" class="btn btn-outline-light" id="backTo2">Back</button>
+          <button type="button" class="btn btn-light" id="downloadCard">Download card</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="card-flow-footer" dir="ltr">
+      <p class="mb-0 d-flex justify-content-center align-items-center flex-wrap gap-1">
+        <span>Powered by</span>
+        <a href="https://6degrees.com.sa/en" target="_blank" rel="noopener noreferrer" class="text-decoration-none d-inline-block">
+          <img src="assets/images/6degrees-logo.png" alt="6 Degrees" style="height: 28px;" />
+        </a>
+      </p>
+    </footer>
+
+    <script src="assets/js/companies-config.js"></script>
+    <script src="assets/js/card-flow.js"></script>
+  </body>
+</html>

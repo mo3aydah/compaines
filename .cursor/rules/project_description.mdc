@@ -1,0 +1,51 @@
+---
+alwaysApply: true
+---
+
+Title: Greetings Card Generator
+
+A customized bilingual multi-step greetings card generator for Ramadan/Eid celebrations.
+
+## Project Overview
+Interactive web application that allows users to create personalized Eid greeting cards. Users first preview all company cards and choose a language; then they go through three steps: choose a message, enter their name, and preview and download the final card.
+
+## Features
+
+### Flow
+
+**1. Landing: Company Showcase & Language**
+- **Preview all company cards** – Showcase/preview of all available company greeting cards
+- **Language selection** – Choose between Arabic or English (applies to the rest of the flow)
+
+**2. Multi-Step Flow (after company and language are chosen)**
+1. **Message Selection** – Choose from pre-defined messages (language-specific)
+2. **Name Entry** – Enter personalized name for the card
+3. **Preview & Download** – View final card and download as PNG
+
+### Key Features
+- **Company showcase first**: Users see all company cards and pick one before starting the steps
+- **Language-Specific UI**: Once language is selected, all UI elements switch to that language only (Arabic or English)
+- **Real-Time Preview**: Canvas preview updates dynamically as users progress through steps
+- **Step Indicators**: Visual progress bar showing current step and completed steps (for the 3 steps)
+- **Navigation Controls**: Back and Next buttons on the three steps (message, name, preview & download)
+- **Responsive Design**: Works on desktop and mobile devices
+- **Canvas Rendering**: Uses HTML5 Canvas to render personalized cards with custom fonts
+- **Data Tracking**: Integrates with SheetDB API to track card generation
+
+### Technical Stack
+- HTML5 Canvas for card rendering
+- Bootstrap 5 for responsive layout
+- Vanilla JavaScript for interactivity
+- Custom CSS with navy blue theme and animated backgrounds
+- Custom fonts (AlQabas for Arabic, GESSTwoLight for English)
+
+### File Structure
+- **Landing**: `index.html` — company showcase and language selection
+- **Card flow**: `card.html` — 3-step flow (message, name, preview & download); uses `?company=<id>`
+- **Shared**: `assets/js/companies-config.js` (companies, messages, UI strings), `assets/js/card-flow.js`, `assets/css/landing.css`, `assets/css/card-flow.css`
+- **Legacy (optional)**: per-company pages e.g. `6deg.html`, `zahma.html` and `assets/js/*.js`, `assets/css/*.css`
+- Card images in `assets/images/`
+- Font files in `assets/fonts/`
+
+### Current Companies (on landing)
+- 6deg, Burooj, Burooj Air, Deets, EC, Naqash, PE, Zahma (config in `companies-config.js`)

@@ -1,0 +1,28 @@
+---
+alwaysApply: true
+---
+
+# Project Brief: Greetings Card Generator
+
+## Primary Objectives
+- Deliver a **bilingual (Arabic/English) multi-step greetings card generator** for Ramadan/Eid celebrations.
+- Allow users to **preview all company cards**, choose a **language**, then complete **three steps**: message selection, name entry, preview and download.
+
+## Key Deliverables
+1. **Landing experience**: Showcase of all company greeting cards with language selection (Arabic or English).
+2. **Three-step flow** (after company and language chosen):
+   - Step 1: Message selection (language-specific).
+   - Step 2: Name entry.
+   - Step 3: Preview and download (PNG).
+3. **Per-company card experience**: Each company has its own card design and optional entry point; current focus is Almanaa (Ramadan post card).
+
+## Stakeholder Expectations
+- Users can browse company cards and choose one before personalizing.
+- Full UI switches to selected language for the rest of the session.
+- Real-time canvas preview and one-click PNG download.
+- Responsive, usable on desktop and mobile.
+
+## Constraints and Boundaries
+- **Scope**: Ramadan/Eid greeting cards; bilingual (Arabic, English) only.
+- **Technical**: Client-side web app (HTML, CSS, JavaScript); Canvas for rendering; optional SheetDB for tracking.
+- **Companies**: Documented current company is Almanaa; structure must support multiple companies on the landing/showcase.

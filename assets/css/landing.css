@@ -1,0 +1,187 @@
+@font-face {
+  font-family: "GESSTwoLight";
+  src: url(../fonts/GESSTwoLight.otf);
+}
+
+body {
+  font-family: 'GESSTwoLight', sans-serif;
+  background-color: #0a1628;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.landing-header {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.lang-btn {
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lang-btn:hover,
+.lang-btn.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.5);
+}
+
+.landing-hero {
+  text-align: center;
+  padding: 2rem 1rem 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.landing-hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.landing-hero-subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.company-cards-section {
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+  max-width: 720px;
+}
+
+/* Single block: all cards in one place */
+.company-cards-block {
+  background: transparent;
+  overflow: visible;
+  padding: 0;
+}
+
+/* Deck-style stack of cards */
+.company-cards-deck {
+  position: relative;
+  height: 380px;
+  margin: 0 0 1.5rem;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-x;
+}
+
+.company-cards-deck-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-out;
+}
+
+.company-card-deck-item {
+  position: absolute;
+  width: 260px;
+  height: 346px;
+  padding: 0;
+  border: none;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #1a1a1a;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease, box-shadow 0.5s ease;
+  transform-origin: center center;
+  left: 50%;
+  top: 50%;
+  margin-left: -130px;
+  margin-top: -173px;
+  will-change: transform, opacity;
+}
+
+.company-card-deck-item.active {
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+}
+
+.company-card-deck-item:not(.active) {
+  cursor: default;
+}
+
+.company-card-deck-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.company-cards-block-title {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.landing-empty {
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+footer.landing-footer {
+  direction: ltr;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+}
+
+footer.landing-footer a {
+  color: #6c8eff;
+  text-decoration: none;
+}
+
+body[dir="rtl"] .landing-hero-title,
+body[dir="rtl"] .landing-hero-subtitle {
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .company-cards-section {
+    padding: 0 0.75rem;
+  }
+  .company-cards-block {
+    padding: 0;
+  }
+  .company-cards-deck {
+    height: 280px;
+  }
+  .company-card-deck-item {
+    width: 200px;
+    height: 266px;
+    margin-left: -100px;
+    margin-top: -133px;
+    border-radius: 20px;
+  }
+  .company-cards-block-title {
+    font-size: 0.85rem;
+  }
+  .landing-hero-title { font-size: 1.5rem; }
+  .landing-hero-subtitle { font-size: 1rem; }
+}

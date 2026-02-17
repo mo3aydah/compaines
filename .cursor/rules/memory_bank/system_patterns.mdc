@@ -1,0 +1,47 @@
+---
+alwaysApply: true
+---
+
+# System Patterns: Architecture and Technical Decisions
+
+## High-Level Architecture
+
+```mermaid
+flowchart TD
+    subgraph Landing["Landing"]
+        Showcase["Company card previews"]
+        Lang["Language selection (AR/EN)"]
+        Showcase --> Lang
+    end
+    subgraph Steps["3-Step Flow"]
+        S1["Step 1: Message selection"]
+        S2["Step 2: Name entry"]
+        S3["Step 3: Preview & Download"]
+        S1 --> S2 --> S3
+    end
+    Landing --> Steps
+    S3 --> Canvas["HTML5 Canvas render"]
+    S3 --> SheetDB["SheetDB (tracking)"]
+```
+
+*Diagram: Landing (showcase + language) feeds into the three-step flow; step 3 uses Canvas for rendering and optionally SheetDB for tracking.*
+
+- **Landing**: One or more pages/sections that display all company card previews and capture language. Selecting a company and language leads into the three-step flow.
+- **Step flow**: Linear sequence (message → name → preview & download). Back/Next only within these three steps.
+- **Rendering**: HTML5 Canvas draws the final card (custom fonts, images, text).
+- **Tracking**: Optional SheetDB API call when a card is generated/downloaded.
+
+## Key Technical Decisions
+- **Vanilla JS + Bootstrap 5**: No framework; Bootstrap for layout and components, custom JS for state and Canvas.
+- **Canvas (not SVG/CSS card)**: Chosen for pixel-perfect export to PNG and consistent print/preview.
+- **Language as session state**: Once selected on landing, language is stored (e.g. in JS) and drives all copy and RTL/LTR for the rest of the flow.
+- **Per-company assets**: Each company can have its own HTML, JS, CSS, and images (e.g. `almanaa.html`, `assets/js/almanaa.js`); landing must aggregate or link to each.
+
+## Design Patterns
+- **Step state machine**: Current step (1–3) and choices (company, language, message, name) held in JS; DOM shows/hides step panels and updates preview.
+- **Single source of copy**: Messages and UI strings defined per language (e.g. objects or JSON) and selected by current language.
+- **Font loading**: Custom fonts (e.g. AlQabas for Arabic, GESSTwoLight for English) loaded before Canvas draw to avoid fallback or layout shift.
+
+## Guidelines for Consistency
+- New companies: add entry to landing showcase, plus company-specific HTML/JS/CSS and assets as per existing pattern.
+- New steps or reordering: update project_description, project_brief, product_context, and this file so the Memory Bank stays the source of truth.

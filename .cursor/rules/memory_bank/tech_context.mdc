@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+---
+
+# Tech Context: Technical Environment
+
+## Technologies
+
+| Layer        | Technology / Version |
+|-------------|----------------------|
+| Markup      | HTML5                |
+| Styling     | CSS3, Bootstrap 5    |
+| Logic       | Vanilla JavaScript   |
+| Rendering   | HTML5 Canvas         |
+| Fonts       | AlQabas (Arabic), GESSTwoLight (English) |
+| Tracking    | SheetDB API (optional) |
+
+## File Structure (from project description)
+- **Company page**: e.g. `almanaa.html` (single company card).
+- **Scripts**: `assets/js/almanaa.js` (and per-company JS as needed).
+- **Styles**: `assets/css/almanaa.css` (and per-company CSS as needed).
+- **Assets**: `assets/images/` (card images), `assets/fonts/` (font files).
+
+*Note: Repo also contains other HTML/JS/CSS (6deg, burooj, zahma, etc.); project description currently defines Almanaa as the main company for this flow.*
+
+## Development Environment
+- Static web app: open HTML in browser or use a local server; no build step required.
+- Fonts and images must be available under `assets/` for correct Canvas rendering.
+
+## Technical Constraints
+- **Browsers**: Must support Canvas, modern CSS, and optional RTL for Arabic.
+- **Export**: PNG download via Canvas export (e.g. `canvas.toDataURL('image/png')`).
+- **No backend required** for core flow; SheetDB is an external API for logging.
+
+## Critical Dependencies
+- Bootstrap 5 (CDN or local).
+- Custom font files in `assets/fonts/`.
+- Company card images in `assets/images/`.
+- SheetDB endpoint (if tracking is enabled); API key or endpoint must be configured.
+
+## Tools
+- No mandatory build or package manager in project description; plain HTML/CSS/JS.
+- Editor/IDE and optional local server (e.g. Live Server) for development.

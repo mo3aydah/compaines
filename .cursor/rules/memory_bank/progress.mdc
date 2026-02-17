@@ -1,0 +1,57 @@
+# Progress: Real-time Ledger of Work
+
+## Status Legend
+- `[ ]` = Backlog  
+- `[>]` = To Do  
+- `[~]` = In Progress  
+- `[@]` = In Review  
+- `[x]` = Done  
+- `[-]` = Canceled  
+
+---
+
+## Tasks
+
+### Landing: Company Showcase & Language
+- [x] Implement landing page/section that previews all company cards
+- [x] Add language selection (Arabic / English) on landing
+- [x] Wire landing so choosing a company + language starts the 3-step flow
+
+### Three-Step Flow
+- [x] Step 1: Message selection (language-specific options)
+- [x] Step 2: Name entry
+- [x] Step 3: Preview & Download (Canvas render + PNG download)
+- [x] Step indicators (progress bar for steps 1–3)
+- [x] Back / Next navigation between the three steps
+
+### Experience & Polish
+- [x] Language-specific UI (all copy and RTL/LTR) after language chosen
+- [x] Real-time Canvas preview that updates as user advances
+- [x] Responsive layout (desktop and mobile)
+- [ ] Optional: SheetDB integration for card generation tracking
+
+### Documentation & Consistency
+- [x] Memory Bank created (project_brief, product_context, active_context, system_patterns, tech_context, progress)
+- [x] Project description updated to new flow (showcase + language, then 3 steps)
+
+---
+
+## Completed Features (summary)
+- Project description and Memory Bank aligned with target flow: **Landing (company showcase + language)** → **3 steps (message, name, preview & download)**.
+- Memory Bank structure in place for ongoing planning and implementation tracking.
+- **Landing** (`index.html`): Company grid with card previews, language toggle (AR/EN), links to `card.html?company=<id>`. Language stored in `sessionStorage`.
+- **3-step flow** (`card.html` + `assets/js/card-flow.js`): Message selection → Name entry → Preview & Download. Step dots, Back/Next, Canvas render with message + name, PNG download. Bilingual UI and RTL/LTR via `companies-config.js` and `UI_STRINGS`.
+- **Config** (`assets/js/companies-config.js`): `COMPANIES_CONFIG` (all 8 companies: 6deg, burooj, buroojair, deets, ec, naqash, pe, zahma), `MESSAGES` (2 per language), `UI_STRINGS` (en/ar).
+
+## Pending / Not Yet Started
+- Optional SheetDB integration for card generation tracking.
+- Legacy company pages (6deg.html, zahma.html, etc.) remain as direct single-page flows; entry point for new flow is `index.html` → `card.html`.
+
+## Known Issues / Limitations
+- None recorded yet. Add here when bugs or limitations are discovered.
+
+---
+
+## Project Completion Summary
+- **Documentation and design**: Flow and Memory Bank defined.
+- **Implementation**: Landing and 3-step card flow implemented. Start at `index.html` to use the new flow. Legacy company HTML pages are unchanged and can be linked from the landing or deprecated later.
