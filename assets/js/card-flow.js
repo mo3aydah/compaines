@@ -193,12 +193,12 @@
     var fontPathMap = {
       '6degrees': {
         ar: { 
-          light: 'assets/fonts/6D/01.%20Arabic%20Font/sst-arabic-light.ttf',
-          medium: 'assets/fonts/6D/01.%20Arabic%20Font/sst-arabic-medium.ttf'
+          light: 'assets/fonts/naqsh/01.%20Arabic%20Font/riyad-bank-Regular.ttf',
+          medium: 'assets/fonts/naqsh/01.%20Arabic%20Font/riyad-bank-Bold.ttf'
         },
         en: { 
-          light: 'assets/fonts/6D/02.%20English%20Font/KonnectLight.otf',
-          medium: 'assets/fonts/6D/02.%20English%20Font/KonnectMedium.otf'
+          light: 'assets/fonts/naqsh/02.%20English%20Font/alfont_com_29LTZeyn-Regular.ttf',
+          medium: 'assets/fonts/naqsh/02.%20English%20Font/alfont_com_29LTZeyn-Medium%20%281%29.ttf'
         }
       },
       'burooj': {
@@ -278,8 +278,8 @@
     // weight: 'light' for messages, 'medium' or 'bold' for names
     var fontMap = {
       '6degrees': {
-        ar: { light: '6degrees-Arabic-Light', medium: '6degrees-Arabic-Medium' },
-        en: { light: '6degrees-English-Light', medium: '6degrees-English-Medium' }
+        ar: { light: 'Naqash-Arabic-Regular', medium: 'Naqash-Arabic-Bold' },
+        en: { light: 'Naqash-English-Regular', medium: 'Naqash-English-Medium' }
       },
       'burooj': {
         ar: { light: 'Burooj-Arabic-Light', medium: 'Burooj-Arabic-Regular' },
@@ -405,8 +405,8 @@
     var isPE = companyId === 'pe';
     // Use company-specific fonts
     var msgFontFamily = getCompanyFont(companyId, lang, 'light');
-    // Use same font size as naqash
-    var msgFontSize = (is6degrees || isNaqash) ? '32pt' : '32pt'; // Same as naqash
+    // Naqash and 6D use same larger sizes for message and name
+    var msgFontSize = (is6degrees || isNaqash) ? '48pt' : '32pt';
     // Build font string - format: "size fontFamily" (using pt like naqash)
     var msgFont = msgFontSize + ' ' + msgFontFamily;
     // Set font - must be done after any canvas dimension changes
@@ -418,10 +418,8 @@
     var isBuroojAir = companyId === 'buroojair';
     var isEC = companyId === 'ec';
     var msgY;
-    if (isNaqash || isPE) {
-      msgY = 1500; // Same position for naqash and PE
-    } else if (is6degrees) {
-      msgY = 1550; // Move message down a little for 6degrees
+    if (isNaqash || isPE || is6degrees) {
+      msgY = 1500; // Same position for naqash, PE, and 6degrees
     } else if (isDeets) {
       msgY = 1400; // Move message up more for deets
     } else if (isEC) {
@@ -429,8 +427,8 @@
     } else {
       msgY = 720;
     }
-    // Use same line height as naqash
-    var lineHeight = (is6degrees || isNaqash) ? 48 : 48; // Same as naqash
+    // Naqash and 6D use same line height
+    var lineHeight = (is6degrees || isNaqash) ? 64 : 48;
     msgLines.forEach(function(line, i) {
       context.fillText(line, imageWidth / 2, msgY + i * lineHeight);
     });
@@ -438,17 +436,15 @@
     // Name: below message - use heavier/bolder font
     // Use company-specific fonts
     var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
-    // Use same font size as naqash
-    var nameFontSize = (is6degrees || isNaqash) ? '40pt' : '40pt'; // Same as naqash
+    // Naqash and 6D use same larger size for name
+    var nameFontSize = (is6degrees || isNaqash) ? '56pt' : '40pt';
     // Build font string - format: "size fontFamily" (using pt like naqash)
     var nameFont = nameFontSize + ' ' + nameFontFamily;
     // Set font - must be done after any canvas dimension changes
     context.font = nameFont;
     var nameY;
-    if (isNaqash || isPE) {
-      nameY = 1650; // Same position for naqash and PE
-    } else if (is6degrees) {
-      nameY = 1700; // Move name down a little for 6degrees
+    if (isNaqash || isPE || is6degrees) {
+      nameY = 1650; // Same position for naqash, PE, and 6degrees
     } else if (isDeets) {
       nameY = 1550; // Move name up more for deets
     } else if (isBuroojAir) {
