@@ -396,8 +396,8 @@
     // Reset all text properties after any canvas dimension changes
     context.textAlign = 'center';
     context.textBaseline = 'alphabetic'; // Use default baseline for proper rendering
-    // Use white text color for all companies
-    context.fillStyle = '#FFFFFF';
+    // Use black text color
+    context.fillStyle = '#000000';
 
     // Message: smaller font, possibly multi-line - use lighter font
     var is6degrees = companyId === '6degrees';
@@ -405,8 +405,8 @@
     var isPE = companyId === 'pe';
     // Use company-specific fonts
     var msgFontFamily = getCompanyFont(companyId, lang, 'light');
-    // Naqash and 6D use same larger sizes for message and name
-    var msgFontSize = (is6degrees || isNaqash) ? '48pt' : '32pt';
+    // Font size for message
+    var msgFontSize = (is6degrees || isNaqash) ? '26pt' : '26pt';
     // Build font string - format: "size fontFamily" (using pt like naqash)
     var msgFont = msgFontSize + ' ' + msgFontFamily;
     // Set font - must be done after any canvas dimension changes
@@ -419,7 +419,7 @@
     var isEC = companyId === 'ec';
     var msgY;
     if (isNaqash || isPE || is6degrees) {
-      msgY = 1500; // Same position for naqash, PE, and 6degrees
+      msgY = 1380; // Position for naqash, PE, and 6degrees (moved up)
     } else if (isDeets) {
       msgY = 1400; // Move message up more for deets
     } else if (isEC) {
@@ -427,8 +427,8 @@
     } else {
       msgY = 720;
     }
-    // Naqash and 6D use same line height
-    var lineHeight = (is6degrees || isNaqash) ? 64 : 48;
+    // Line height for message
+    var lineHeight = (is6degrees || isNaqash) ? 40 : 38;
     msgLines.forEach(function(line, i) {
       context.fillText(line, imageWidth / 2, msgY + i * lineHeight);
     });
@@ -436,15 +436,15 @@
     // Name: below message - use heavier/bolder font
     // Use company-specific fonts
     var nameFontFamily = getCompanyFont(companyId, lang, 'medium');
-    // Naqash and 6D use same larger size for name
-    var nameFontSize = (is6degrees || isNaqash) ? '56pt' : '40pt';
+    // Font size for name
+    var nameFontSize = (is6degrees || isNaqash) ? '34pt' : '34pt';
     // Build font string - format: "size fontFamily" (using pt like naqash)
     var nameFont = nameFontSize + ' ' + nameFontFamily;
     // Set font - must be done after any canvas dimension changes
     context.font = nameFont;
     var nameY;
     if (isNaqash || isPE || is6degrees) {
-      nameY = 1650; // Same position for naqash, PE, and 6degrees
+      nameY = 1530; // Position for naqash, PE, and 6degrees (moved up)
     } else if (isDeets) {
       nameY = 1550; // Move name up more for deets
     } else if (isBuroojAir) {

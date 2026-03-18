@@ -371,6 +371,33 @@ body {
   text-align: center;
 }
 
+.landing-start-cta-wrap {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+}
+
+.landing-start-cta {
+  min-height: 48px;
+  padding: 0.75rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1a1a1a;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.landing-start-cta:hover {
+  background: rgba(255,255,255,0.95);
+  transform: translateY(-2px);
+}
+
+.landing-start-cta:active {
+  transform: translateY(0);
+}
+
 .landing-empty {
   text-align: center;
   color: rgba(255,255,255,0.6);

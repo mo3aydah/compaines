@@ -24,11 +24,11 @@
       </header>
 
       <div class="landing-hero">
-        <h1 class="landing-hero-title" id="landingHeroTitle">تهنئة رمضانية لمن يعزّ عليك</h1>
-        <p class="landing-hero-subtitle" id="landingHeroSubtitle">اختر تصميم بطاقتك وأنشئ تهنئة مميزة تشاركها مع من تحب.</p>
+        <h1 class="landing-hero-title" id="landingHeroTitle">تهنئة العيد لمن يعز عليك</h1>
+        <p class="landing-hero-subtitle" id="landingHeroSubtitle">أنشئ بطاقة تهنئة بالعيد مميزة وشاركها مع من تحب</p>
       </div>
 
-      <section class="company-cards-section" aria-labelledby="companyCardsSectionTitle">
+      <section class="company-cards-section">
         <div class="company-cards-block" id="companyCardsBlock" hidden>
           <div class="company-cards-deck" id="companyCardsDeck" role="list">
             <div class="company-cards-deck-container" id="companyCardsDeckContainer"></div>
@@ -44,7 +44,9 @@
               </div>
             </div>
           </div>
-          <h2 class="company-cards-block-title" id="companyCardsSectionTitle">Swipe and choose</h2>
+          <div class="landing-start-cta-wrap" id="landingStartCtaWrap">
+            <button type="button" class="btn btn-light landing-start-cta" id="landingStartCta">Start</button>
+          </div>
         </div>
         <p class="landing-empty" id="landingEmpty" hidden>No cards available at the moment.</p>
       </section>
@@ -146,15 +148,15 @@
 
         var titles = {
           en: {
-            heroTitle: 'A Ramadan Greeting for Someone Special',
-            heroSubtitle: 'Select your preferred design and create a personalized card to share with those who matter most.',
-            sectionTitle: 'Swipe and choose',
+            heroTitle: 'An Eid Greeting for Someone Special',
+            heroSubtitle: 'Create a special Eid greeting card and share it with your loved ones',
+            sectionTitle: '',
             emptyGrid: 'No cards available at the moment.'
           },
           ar: {
-            heroTitle: 'تهنئة رمضانية لمن يعزّ عليك',
-            heroSubtitle: 'اختر تصميم بطاقتك وأنشئ تهنئة مميزة تشاركها مع من تحب.',
-            sectionTitle: 'اسحب واختر',
+            heroTitle: 'تهنئة العيد لمن يعز عليك',
+            heroSubtitle: 'أنشئ بطاقة تهنئة بالعيد مميزة وشاركها مع من تحب',
+            sectionTitle: '',
             emptyGrid: 'لا توجد بطاقات متاحة حاليًا.'
           }
         };
@@ -166,8 +168,8 @@
           document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
           document.getElementById('landingHeroTitle').textContent = titles[lang].heroTitle;
           document.getElementById('landingHeroSubtitle').textContent = titles[lang].heroSubtitle;
-          var sectionTitleEl = document.getElementById('companyCardsSectionTitle');
-          if (sectionTitleEl) sectionTitleEl.textContent = titles[lang].sectionTitle;
+          var startCtaEl = document.getElementById('landingStartCta');
+          if (startCtaEl) startCtaEl.textContent = lang === 'ar' ? 'ابدأ' : 'Start';
           var langShortcutBtn = document.getElementById('langShortcutBtn');
           var langShortcutText = document.getElementById('langShortcutText');
           if (langShortcutBtn && langShortcutText) {
@@ -485,27 +487,29 @@
                 preloadImg.src = c.image;
               }
               card.appendChild(img);
-              var showPreviewModal = function() {
-                var modal = document.getElementById('cardPreviewModal');
-                var modalImg = document.getElementById('cardPreviewModalImg');
-                var modalSelect = document.getElementById('cardPreviewModalSelect');
-                if (modal && modalImg && modalSelect) {
-                  modalImg.src = c.image;
-                  modalSelect.textContent = lang === 'ar' ? 'اختر هذه البطاقة' : 'Select this card';
-                  modal.setAttribute('data-company-id', c.id);
-                  modal.removeAttribute('hidden');
-                  document.body.style.overflow = 'hidden';
-                  // Focus close button for accessibility
-                  var closeBtn = document.getElementById('cardPreviewModalClose');
-                  if (closeBtn) setTimeout(function() { closeBtn.focus(); }, 100);
-                }
-              };
-              
               var cardClickHandler = function(e) {
                 if (this.classList.contains('active') && !isDragging) {
                   e.preventDefault();
                   e.stopPropagation();
-                  showPreviewModal();
+                  // Single company: start flow directly (no modal)
+                  if (companies.length === 1) {
+                    sessionStorage.setItem('card-company', c.id);
+                    showSteps();
+                    if (window.startCardFlow) window.startCardFlow(c.id);
+                  } else {
+                    var modal = document.getElementById('cardPreviewModal');
+                    var modalImg = document.getElementById('cardPreviewModalImg');
+                    var modalSelect = document.getElementById('cardPreviewModalSelect');
+                    if (modal && modalImg && modalSelect) {
+                      modalImg.src = c.image;
+                      modalSelect.textContent = lang === 'ar' ? 'اختر هذه البطاقة' : 'Select this card';
+                      modal.setAttribute('data-company-id', c.id);
+                      modal.removeAttribute('hidden');
+                      document.body.style.overflow = 'hidden';
+                      var closeBtn = document.getElementById('cardPreviewModalClose');
+                      if (closeBtn) setTimeout(function() { closeBtn.focus(); }, 100);
+                    }
+                  }
                 }
               };
               
@@ -525,7 +529,7 @@
             var naqashIndex = companies.findIndex(function(c) { return c.id === 'naqash'; });
             var startIndex = naqashIndex >= 0 ? naqashIndex : 0;
             updateDeckPosition(startIndex);
-            initDeckSwipe();
+            // No swipe/drag: single card with Start CTA only
             // Initial background update after images load
             setTimeout(function() {
               updateDeckBackground();
@@ -534,6 +538,17 @@
         }
 
         setLang(lang);
+        
+        // Start CTA: begin card flow with first (only) company
+        var landingStartCta = document.getElementById('landingStartCta');
+        if (landingStartCta && companies.length > 0) {
+          landingStartCta.addEventListener('click', function() {
+            var companyId = companies[0].id;
+            sessionStorage.setItem('card-company', companyId);
+            showSteps();
+            if (window.startCardFlow) window.startCardFlow(companyId);
+          });
+        }
         
         // Preview modal handlers
         var previewModal = document.getElementById('cardPreviewModal');
